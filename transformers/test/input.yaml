@@ -1,0 +1,48 @@
+apiVersion: config.kubernetes.io/v1alpha1
+kind: ResourceList
+items:
+- apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    annotations:
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:ACCOUNTID:certificate/PRODUCTION_ARN
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+      alb.ingress.kubernetes.io/ssl-redirect: "443"
+      kubernetes.io/ingress.class: alb
+      kustomize.config.k8s.io/id: |
+        group: networking.k8s.io
+        kind: Ingress
+        name: my-ingress
+        namespace: default
+        version: v1
+      config.kubernetes.io/index: '0'
+      internal.config.kubernetes.io/index: '0'
+      internal.config.kubernetes.io/id: '1'
+      config.k8s.io/id: '1'
+    name: my-ingress
+    namespace: default
+  spec:
+    rules:
+    - host: app1.example.com
+      http:
+        paths:
+        - backend:
+            service:
+              name: app1
+              port:
+                number: 8080
+          path: /api/v1alpha1/
+          pathType: Prefix
+functionConfig:
+  apiVersion: kustomize-ingress/v1alpha1
+  kind: IngressPatch
+  metadata:
+    annotations:
+      config.kubernetes.io/function: |
+        exec:
+          path: ./kustomize_ingress_patch.py
+      config.kubernetes.io/local-config: 'true'
+    name: staging
+  spec:
+    certificate-arn: arn:aws:acm:us-west-2:ACCOUNTID:certificate/STAGING_ARN
+    host: app1.stg.example.com

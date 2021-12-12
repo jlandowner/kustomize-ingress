@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alb-config-staging
+data:
+  host: app1.stg.example.com
+  certificate-arn: arn:aws:acm:us-west-2:ACCOUNTID:certificate/STAGING_ARN

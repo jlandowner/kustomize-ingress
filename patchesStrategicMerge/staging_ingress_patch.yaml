@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:ACCOUNTID:certificate/STAGING_ARN
+  name: my-ingress
+spec:
+  rules:
+  - host: app1.stg.example.com
+    http:
+      paths:
+      - path: /api/v1alpha1/
+        pathType: Prefix
+        backend:
+          service:
+            name: app1
+            port: 
+              number: 8080

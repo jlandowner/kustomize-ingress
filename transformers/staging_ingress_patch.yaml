@@ -1,0 +1,11 @@
+apiVersion: kustomize-ingress/v1alpha1
+kind: IngressPatch
+metadata:
+  annotations:
+    config.kubernetes.io/function: |
+      exec:
+        path: ./krm_ingress_patch_func.py
+  name: staging
+spec:
+  host: app1.stg.example.com
+  certificate-arn: arn:aws:acm:us-west-2:ACCOUNTID:certificate/STAGING_ARN

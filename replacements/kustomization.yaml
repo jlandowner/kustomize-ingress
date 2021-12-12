@@ -1,0 +1,25 @@
+resources:
+- ingress.yaml
+- staging_ingress_patch.yaml
+
+replacements:
+- source:
+    kind: ConfigMap
+    name: alb-config-staging
+    fieldPath: data.host
+  targets:
+  - select:
+      kind: Ingress
+      name: my-ingress
+    fieldPaths:
+    - spec.rules.0.host
+- source:
+    kind: ConfigMap
+    name: alb-config-staging
+    fieldPath: data.certificate-arn
+  targets:
+  - select:
+      kind: Ingress
+      name: my-ingress
+    fieldPaths:
+    - metadata.annotations.alb\.ingress\.kubernetes\.io/certificate-arn

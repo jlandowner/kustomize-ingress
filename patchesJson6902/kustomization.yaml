@@ -1,0 +1,16 @@
+resources:
+- ingress.yaml
+
+patchesJson6902:
+- target:
+    group: networking.k8s.io
+    version: v1
+    kind: Ingress
+    name: my-ingress
+  patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: app1.stg.example.com
+    - op: replace
+      path: /metadata/annotations/alb.ingress.kubernetes.io~1certificate-arn
+      value: arn:aws:acm:us-west-2:ACCOUNTID:certificate/STAGING_ARN

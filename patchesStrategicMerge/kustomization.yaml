@@ -1,0 +1,5 @@
+resources:
+- ingress.yaml
+
+patchesStrategicMerge:
+- ingress_patch.yaml

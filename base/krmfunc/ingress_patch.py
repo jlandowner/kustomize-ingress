@@ -9,8 +9,8 @@ import logging
 def main(args=sys.argv[1:]):
   resource_list = yaml.load(sys.stdin, Loader=yaml.FullLoader)
 
-  target_name   = dict_get(resource_list, 'functionConfig.metadata.name')
-  annotations   = dict_get(resource_list, 'functionConfig.spec.annotations', {})
+  target_name = dict_get(resource_list, 'functionConfig.metadata.name')
+  annotations = dict_get(resource_list, 'functionConfig.spec.annotations', {})
 
   hosts = []
   for host in dict_get(resource_list, 'functionConfig.spec.hosts', []):
@@ -20,8 +20,8 @@ def main(args=sys.argv[1:]):
 
   output = []
   for resource in dict_get(resource_list, 'items', []):
-    if resource['apiVersion'] in ['extensions/v1beta1', 'networking.k8s.io/v1', 'networking.k8s.io/v1beta1']  \
-        and resource['kind'] == 'Ingress'  \
+    if resource['apiVersion'] in ['extensions/v1beta1', 'networking.k8s.io/v1', 'networking.k8s.io/v1beta1'] \
+        and resource['kind'] == 'Ingress' \
         and dict_get(resource, 'metadata.name') == target_name:
 
       # patch annnotation

@@ -5,7 +5,9 @@ metadata:
     config.kubernetes.io/function: |
       exec:
         path: ./krmfunc/ingress_patch.py
-  name: staging
+  name: my-ingress
 spec:
-  host: app1.stg.example.com
-  certificate-arn: arn:aws:acm:us-west-2:ACCOUNTID:certificate/STAGING_ARN
+  hosts: 
+  - name: app1.stg.example.com
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:ACCOUNTID:certificate/STAGING_ARN

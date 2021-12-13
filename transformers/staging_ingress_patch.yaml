@@ -1,3 +1,6 @@
+# This file is the custom resource for kustomize transformer
+# Spec field is defined for custom scripts
+# See ./base/krmfunc/ingress_patch.py for details
 apiVersion: kustomize-ingress/v1alpha1
 kind: IngressPatch
 metadata:

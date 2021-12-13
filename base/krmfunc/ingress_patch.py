@@ -12,7 +12,7 @@ def main(args=sys.argv[1:]):
   certificate_arn = dict_get(resource_list, 'functionConfig.spec.certificate-arn')
   host_name = dict_get(resource_list, 'functionConfig.spec.host')
 
-  ingresses = []
+  output = []
   for resource in dict_get(resource_list, 'items', []):
     if resource['apiVersion'] in ['extensions/v1beta1', 'networking.k8s.io/v1', 'networking.k8s.io/v1beta1'] and resource['kind'] == 'Ingress':
       # patch annnotation
@@ -25,8 +25,8 @@ def main(args=sys.argv[1:]):
         for rule in dict_get(resource, 'spec.rules', []):
           rule['host'] = host_name
 
-    ingresses.append(resource)
-  sys.stdout.write(yaml.dump_all(ingresses))
+    output.append(resource)
+  sys.stdout.write(yaml.dump_all(output))
 
 def dict_get(dictionary, keys, default=None):
   return reduce(lambda d, key: d.get(key, default) if isinstance(d, dict) else default, keys.split("."), dictionary)

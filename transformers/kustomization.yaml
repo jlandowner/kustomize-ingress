@@ -1,5 +1,5 @@
 resources:
-- ingress.yaml
+- ../base
 
 transformers:
 - staging_ingress_patch.yaml

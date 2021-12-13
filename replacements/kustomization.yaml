@@ -1,5 +1,5 @@
 resources:
-- ingress.yaml
+- ../base
 - staging_ingress_patch.yaml
 
 replacements:

@@ -1,5 +1,5 @@
 resources:
-- ingress.yaml
+- ../base
 
 patchesJson6902:
 - target:

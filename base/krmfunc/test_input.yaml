@@ -33,6 +33,16 @@ items:
                 number: 8080
           path: /api/v1alpha1/
           pathType: Prefix
+    - host: app2.example.com
+      http:
+        paths:
+        - backend:
+            service:
+              name: app2
+              port:
+                number: 8080
+          path: /api/v1alpha1/
+          pathType: Prefix
 functionConfig:
   apiVersion: kustomize-ingress/v1alpha1
   kind: IngressPatch
@@ -40,9 +50,13 @@ functionConfig:
     annotations:
       config.kubernetes.io/function: |
         exec:
-          path: ./kustomize_ingress_patch.py
-      config.kubernetes.io/local-config: 'true'
-    name: staging
+          path: ./krmfunc/ingress_patch.py
+    name: my-ingress
   spec:
-    certificate-arn: arn:aws:acm:us-west-2:ACCOUNTID:certificate/STAGING_ARN
-    host: app1.stg.example.com
+    hosts: 
+    - name: app1.stg.example.com
+      target: app1.example.com
+    - name: app2.stg.example.
+      target: app2.example.com
+    annotations:
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:ACCOUNTID:certificate/STAGING_ARN

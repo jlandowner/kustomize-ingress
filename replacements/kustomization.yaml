@@ -1,11 +1,11 @@
 resources:
 - ../base
-- staging_ingress_patch.yaml
+- ingress-config-staging.yaml
 
 replacements:
 - source:
     kind: ConfigMap
-    name: alb-config-staging
+    name: ingress-config-staging
     fieldPath: data.host
   targets:
   - select:
@@ -15,7 +15,7 @@ replacements:
     - spec.rules.0.host
 - source:
     kind: ConfigMap
-    name: alb-config-staging
+    name: ingress-config-staging
     fieldPath: data.certificate-arn
   targets:
   - select:

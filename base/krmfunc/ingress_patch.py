@@ -20,7 +20,10 @@ def main(args=sys.argv[1:]):
 
   output = []
   for resource in dict_get(resource_list, 'items', []):
-    if resource['apiVersion'] in ['extensions/v1beta1', 'networking.k8s.io/v1', 'networking.k8s.io/v1beta1'] and resource['kind'] == 'Ingress' and dict_get(resource, 'metadata.name') == target_name:
+    if resource['apiVersion'] in ['extensions/v1beta1', 'networking.k8s.io/v1', 'networking.k8s.io/v1beta1']  \
+        and resource['kind'] == 'Ingress'  \
+        and dict_get(resource, 'metadata.name') == target_name:
+
       # patch annnotation
       if len(annotations) > 0:
         ann = dict_get(resource, 'metadata.annotations')
